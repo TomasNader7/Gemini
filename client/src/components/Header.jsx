@@ -2,6 +2,7 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, Container, Select, MenuItem, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { CryptoState } from '../CryptoContext';
 
 const darkTheme = createTheme({
     palette: {
@@ -14,6 +15,9 @@ const darkTheme = createTheme({
 
 const Header = () => {
     const homepage = useNavigate();
+
+    const { currency, setCurrency } = CryptoState();
+    console.log(currency);
 
     return (
         <ThemeProvider theme={darkTheme}>
@@ -28,7 +32,8 @@ const Header = () => {
                                     fontWeight: "bold",
                                     color: "gold",
                                     flex: 1,
-                                    cursor: "pointer"                                }}
+                                    cursor: "pointer"
+                                }}
                             >
                                 Gemini
                             </Typography>
@@ -39,6 +44,8 @@ const Header = () => {
                                     height: 40,
                                     marginRight: 15
                                 }}
+                                value={currency}
+                                onChange={(e) => setCurrency(e.target.value)}
                             >
                                 <MenuItem value={"USD"}>USD</MenuItem>
                                 <MenuItem value={"ARS"}>ARS</MenuItem>
