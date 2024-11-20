@@ -43,7 +43,8 @@ const CoinPage = () => {
                     flexDirection: "column",
                     alignItems: "center",
                     marginTop: 3,
-                    borderRight: { md: "2px solid grey", xs: "none" },
+                    borderRight: { md: "2px solid grey", xs: "none" }, 
+                    minHeight: "80vh",
                 }}
             >
                 <img
