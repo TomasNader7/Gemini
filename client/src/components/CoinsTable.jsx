@@ -80,7 +80,8 @@ const CoinsTable = () => {
                                                     fontFamily: "Montserrat",
                                                 }}
                                                 key={head}
-                                                align={head === "Coin" ? "" : "right"}
+                                                align={head === "Coin" ? "left" : "right"}
+
                                             >
                                                 {head}
                                             </TableCell>
@@ -173,7 +174,7 @@ const CoinsTable = () => {
                         display: "flex",
                         justifyContent: "center",
                     }}
-                    count={(handleSearch()?.length / 10).toFixed(0)}
+                    count={Math.ceil(handleSearch()?.length / 10)}
                     onChange={(_, value) => {
                         setPage(value);
                         window.scroll(0, 450);

@@ -47,7 +47,7 @@ const CoinInfo = ({ coin }) => {
         setLoading(true);
         try {
             const { data } = await axios.get(
-                `/api/coins/${coin.id}/market_chart?vs_currency=${currency}&days=${days}`
+                HistoricalChart(coin.id, days, currency)
             );
             setHistoricData(data.prices);
         } catch (error) {
