@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Box, TextField } from '@mui/material';
+import { Box, TextField, Button } from '@mui/material';
+import { CryptoState } from '../../CryptoContext';
 
 
 
@@ -8,6 +9,19 @@ const Signup = ({ handleClose }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+
+    const { setAlert } = CryptoState();
+
+    const handleSubmit = () => {
+        if (password !== confirmPassword) {
+            setAlert({
+                open: true,
+                message: "Passwords do not match",
+                type: "error"
+            });
+            return;
+        }
+    };
 
 
     return (
@@ -38,6 +52,14 @@ const Signup = ({ handleClose }) => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 fullWidth
             />
+            <Button
+                variant="contained"
+                size="large"
+                style={{ backgroundColor: "#EEBC1D" }}
+                onClick={handleSubmit}
+            >
+                Sign Up
+            </Button>
         </Box>
     );
 };
