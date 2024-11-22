@@ -15,7 +15,7 @@ const darkTheme = createTheme({
         mode: "dark",
     },
 });
-
+let coinsTableRequestCount = 0;
 const CoinsTable = () => {
 
     const [coins, setCoins] = useState([]);
@@ -28,6 +28,8 @@ const CoinsTable = () => {
     const { currency, symbol } = CryptoState();
 
     const fetchCoins = async () => {
+        coinsTableRequestCount++;
+        console.log(`API Request ${coinsTableRequestCount}: Fetching coins list for currency: ${currency}`);
         setLoading(true);
         const { data } = await axios.get(CoinList(currency));
 

@@ -10,14 +10,15 @@ import { Link } from 'react-router-dom';
 export function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
-
+let carouselRequestCount = 0;
 const Carousel = () => {
 
     const [trending, setTrending] = useState([]);
     const { currency, symbol } = CryptoState();
 
     const fetchTrendingCoins = async () => {
-
+        carouselRequestCount++;
+        console.log(`API Request ${carouselRequestCount}: Fetching trending coins for currency: ${currency}`);
         const { data } = await axios.get(TrendingCoins(currency))
         setTrending(data);
     };

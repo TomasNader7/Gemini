@@ -37,6 +37,8 @@ const darkTheme = createTheme({
     },
 });
 
+let carouselRequestCount = 0;
+
 const CoinInfo = ({ coin }) => {
     const [historicData, setHistoricData] = useState([]);
     const [days, setDays] = useState(1);
@@ -44,7 +46,10 @@ const CoinInfo = ({ coin }) => {
     const { currency } = CryptoState();
 
     const fetchHistoricData = async () => {
+        carouselRequestCount++;
+        console.log(`API Request ${carouselRequestCount}: Fetching trending coins for currency: ${currency}`);
         setLoading(true);
+       
         try {
             const { data } = await axios.get(
                 HistoricalChart(coin.id, days, currency)
