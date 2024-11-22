@@ -1,5 +1,8 @@
 import React from 'react';
-import { Modal, Backdrop, Fade, Box, Button } from '@mui/material';
+import { Modal, Backdrop, Fade, Box, Button, Tab, AppBar, Tabs } from '@mui/material';
+import Login from './Login';
+import Signup from './Signup';
+
 
 export default function AuthModal() {
     const [open, setOpen] = React.useState(false);
@@ -12,21 +15,29 @@ export default function AuthModal() {
         setOpen(false);
     };
 
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+   
     return (
         <div>
             <Button variant="contained"
-                style={{
+                sx={{
                     width: 85,
                     height: 40,
+                    marginLeft: 2,
                     backgroundColor: "#EEBC1D",
+                    "&:hover": {
+                        backgroundColor: "#D4A017",
+                    },
                 }}
                 onClick={handleOpen}
             >
                 Login
             </Button>
             <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
                 open={open}
                 onClose={handleClose}
                 closeAfterTransition
@@ -38,24 +49,38 @@ export default function AuthModal() {
                 <Fade in={open}>
                     <Box
                         sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            height: '100vh',
-                            '& > .paper': {
-                                backgroundColor: 'background.paper',
-                                border: '2px solid #000',
-                                boxShadow: 5,
-                                padding: (theme) => theme.spacing(2, 4, 3),
-                            },
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: 400,
+                            backgroundColor: "#3b3b3b",
+                            color: "white",
+                            borderRadius: 2,
+                            margin: "auto",
+                            padding: 3,
+                            gap: 2,
+                            boxShadow: 24,
                         }}
                     >
-                        <Box className="paper">
-                            <h2 id="transition-modal-title">Transition modal</h2>
-                            <p id="transition-modal-description">
-                                react-transition-group animates me.
-                            </p>
-                        </Box>
+                        <AppBar position="static"
+                            style={{
+                                backgroundColor: "transparent", color: "white", borderRadius: 2,
+                            }} 
+                        >
+                            <Tabs
+                                value={value}
+                                onChange={handleChange}
+                                variant="fullWidth"
+                                style={{ borderRadius: 2 }}
+                            >
+                                <Tab label="Login" />
+                                <Tab label="Sign Up" />
+                            </Tabs>
+                        </AppBar>
+
+                        {value === 0 && <Login handleClose={handleClose} />}
+                        {value === 1 && <Signup handleClose={handleClose} />}
                     </Box>
                 </Fade>
             </Modal>
