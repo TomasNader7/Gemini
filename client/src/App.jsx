@@ -4,6 +4,7 @@ import "./App.css";
 import Header from "./components/Header";
 import Homepage from "./pages/Homepage";
 import CoinPage from "./pages/CoinPage";
+import Alert from "./components/Alert";
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                     <Route path="/coins/:id" element={<CoinPage />} />
                 </Routes>
             </Box>
+            <Alert />
         </BrowserRouter>
     );
 }
