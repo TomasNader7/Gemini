@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CoinList } from '../config/api';
 import { CryptoState } from '../CryptoContext';
-import axios from 'axios';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Container, Typography, TextField, TableContainer, LinearProgress, Table, TableHead, TableRow, TableCell, TableBody, Pagination } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -15,27 +13,16 @@ const darkTheme = createTheme({
         mode: "dark",
     },
 });
-let coinsTableRequestCount = 0;
+
 const CoinsTable = () => {
 
-    const [coins, setCoins] = useState([]);
-    const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState("");
     const [page, setPage] = useState(1);
 
     const history = useNavigate();
 
-    const { currency, symbol } = CryptoState();
+    const { currency, symbol, coins, loading, fetchCoins } = CryptoState();
 
-    const fetchCoins = async () => {
-        coinsTableRequestCount++;
-        console.log(`API Request ${coinsTableRequestCount}: Fetching coins list for currency: ${currency}`);
-        setLoading(true);
-        const { data } = await axios.get(CoinList(currency));
-
-        setCoins(data);
-        setLoading(false);
-    };
 
     console.log(coins);
 
