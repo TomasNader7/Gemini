@@ -7,7 +7,7 @@ import CoinInfo from '../components/CoinInfo';
 import { Box, Typography, LinearProgress } from "@mui/material";
 import parse from 'html-react-parser';
 import { numberWithCommas } from '../components/Banner/Carousel';
-
+let coinPageRequestCount = 0;
 const CoinPage = () => {
 
     const { id } = useParams();
@@ -15,6 +15,8 @@ const CoinPage = () => {
     const { currency, symbol } = CryptoState();
 
     const fetchCoin = async () => {
+        coinPageRequestCount++;
+        console.log(`API Request ${coinPageRequestCount}: Fetching coin data for: ${id}`);
         const { data } = await axios.get(SingleCoin(id));
 
         setCoin(data);
