@@ -3,6 +3,7 @@ import { AppBar, Toolbar, Typography, Container, Select, MenuItem, Box } from '@
 import { useNavigate } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CryptoState } from '../CryptoContext';
+import AuthModal from './Authentication/AuthModal';
 
 const darkTheme = createTheme({
     palette: {
@@ -43,13 +44,18 @@ const Header = () => {
                         >
                             Gemini
                         </Typography>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 2, 
+                            }}
+                        >
                         <Select
                             variant="outlined"
                             style={{
                                 width: 100,
                                 height: 40,
-                                marginLeft: 15,
-                                right: "-60px",
                             }}
                             value={currency}
                             onChange={(e) => setCurrency(e.target.value)}
@@ -57,6 +63,8 @@ const Header = () => {
                             <MenuItem value="USD">USD</MenuItem>
                             <MenuItem value="ARS">ARS</MenuItem>
                         </Select>
+                            <AuthModal />
+                        </Box>
                     </Toolbar>
                 </Container>
             </AppBar>
