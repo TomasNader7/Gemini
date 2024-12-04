@@ -23,5 +23,8 @@ export default defineConfig({
                 rewrite: (path) => path.replace(/^\/api/, ''),
             },
         },
+        headers: {
+            "Cross-Origin-Embedder-Policy": 'unsafe-none'
+        }
     },
 });
