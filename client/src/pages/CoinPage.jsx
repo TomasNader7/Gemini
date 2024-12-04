@@ -34,7 +34,15 @@ const CoinPage = () => {
     const inWatchlist = watchlist.includes(coin?.id);
 
     const addToWatchlist = async () => {
-        const coinRef = doc(db, "Watchlist", user.uid);
+        if (!coin?.id) {
+            setAlert({
+                open: true,
+                message: "Invalid coin ID.",
+                type: "error",
+            });
+            return;
+        }
+        const coinRef = doc(db, "watchlist", user.uid);
 
         try {
             await setDoc(coinRef,
@@ -57,14 +65,14 @@ const CoinPage = () => {
     };
 
     const removeFromWatchlist = async () => {
-        const coinRef = doc(db, "Watchlist", user.uid);
+        const coinRef = doc(db, "watchlist", user.uid);
 
         try {
             await setDoc(coinRef,
                 {
                     coins: watchlist.filter((watch) => watch !== coin?.id) 
                 },
-                {merge: "true"}
+                {merge: true}
             );
 
             setAlert({
