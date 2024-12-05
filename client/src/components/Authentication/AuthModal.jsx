@@ -1,52 +1,62 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Modal, Backdrop, Fade, Box, Button, Tab, AppBar, Tabs } from '@mui/material';
 import Login from './Login';
 import Signup from './Signup';
 import GoogleButton from 'react-google-button';
+import { gapi } from 'gapi-script';
+import { initializeGapi, auth } from '../../firebase';
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from '../../firebase';
 import { CryptoState } from '../../CryptoContext';
 
 export default function AuthModal() {
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState(0);
-
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
     const { setAlert } = CryptoState();
     const googleProvider = new GoogleAuthProvider();
 
-    const signInWithGoogle = () => {
-        console.log("Google Sign-In clicked");
-        signInWithPopup(auth, googleProvider).catch((error) => {
-            if (error.code === 'auth/popup-blocked') {
-                console.error("Popup blocked. Try again after enabling popups.");
-                setAlert({
-                    open: true,
-                    message: "Popup blocked. Please enable popups and try again.",
-                    type: "error",
-                });
-            } else {
-                console.error(error.message);
-                setAlert({
-                    open: true,
-                    message: error.message,
-                    type: "error",
-                });
-            }
-        });
+    useEffect(() => {
+        initializeGapi(); // Initialize Google API on mount
+    }, []);
 
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    const handleChange = (event, newValue) => setValue(newValue);
+
+    const signInWithGoogle = async () => {
+        try {
+            // Ensure Google API is initialized
+            if (!gapi.auth2) {
+                throw new Error("Google API not initialized.");
+            }
+
+            const auth2 = gapi.auth2.getAuthInstance();
+            if (!auth2) {
+                throw new Error("Google Auth Instance not found.");
+            }
+
+            const googleUser = await auth2.signIn();
+            const profile = googleUser.getBasicProfile();
+
+            console.log("Google Sign-In successful: ", profile);
+            setAlert({
+                open: true,
+                message: `Welcome ${profile.getName()}`,
+                type: "success",
+            });
+
+            handleClose();
+        } catch (error) {
+            console.error("Google Sign-In Error: ", error);
+            setAlert({
+                open: true,
+                message: error.message || "An error occurred during sign-in.",
+                type: "error",
+            });
+        }
     };
+
+
 
     return (
         <div>
@@ -124,6 +134,7 @@ export default function AuthModal() {
                             <GoogleButton
                                 style={{ width: "150%", outline: "none", zIndex: 1 }}
                                 onClick={signInWithGoogle}
+                                referrerPolicy="strict-origin-when-cross-origin"
                             />
                         </Box>
                     </Box>
