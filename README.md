@@ -48,3 +48,41 @@ To set up the project locally:
 
    ```bash
    git clone https://github.com/yourusername/crypto-tracker.git
+
+2. **Navigate to the project directory:**
+   ```bash
+   cd crypto-tracker
+
+3. **Install the required dependencies:**
+   ```bash
+   npm install
+
+4. Set up Firebase:
+   - Create a Firebase project at Firebase Console.
+   - Obtain your Firebase configuration credentials and add them to the firebase.js configuration file in the src directory.
+  
+5. **Run the application:**
+   ```bash
+   npm start
+
+The app will run on http://localhost:3000.
+
+## Usage
+- View Real-Time Prices: Upon loading the app, you'll see the current prices of various cryptocurrencies.
+- Track a Cryptocurrency: Search for a cryptocurrency and add it to your favorites for quick access.
+- View Historical Data: Use the chart to select a time frame and analyze the price trends.
+- Authentication: Sign in using Google or email/password authentication to store preferences and favorites in Firebase.
+
+
+## Contributing
+If you’d like to contribute to the project, please follow these steps:
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix (git checkout -b feature-name).
+3. Commit your changes (git commit -am 'Add new feature').
+4. Push to the branch (git push origin feature-name).
+5. Create a new pull request.
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+This is the full `README.md` file with all sections, including Setup, Usage, Contributing, and License. Just paste it into your `README.md` file, and it will be ready to render properly on GitHub or similar platforms.
